@@ -110,8 +110,12 @@ function App() {
               <Col>
                 <Button
                   variant="danger"
-                  className="rounded-circle p-3"
+                  className="rounded-circle p-4"
                   style={{ width: "100px", height: "100px", fontSize: "24px" }}
+                  onMouseOver={(e) =>
+                    (e.target.style.backgroundColor = "#0056b3")
+                  }
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "")}
                   onClick={stopSpeaking}
                   disabled={!isSpeaking}
                 >
