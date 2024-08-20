@@ -17,8 +17,10 @@ def process_speech():
     user_text = data.get('text', '')
     print(f"Received text: {user_text}")  
 
+    prompt = "Provide a concise and informative response to the following query, using only plain text and avoiding any special characters, symbols, or punctuation (only full stops & commas are allowed) :\n"+user_text
 
-    response = model.generate_content(user_text)
+
+    response = model.generate_content(prompt)
     print(response.text)
 
     return jsonify({"message": "Text received successfully!","response":response.text})

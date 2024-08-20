@@ -9,15 +9,23 @@ function App() {
   const [transcript, setTranscript] = useState("");
   const [responseText, setResponseText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const handleMicClick = () => {
     setIsListening(true);
     startSpeechRecognition();
   };
 
+  const stopSpeaking = () => {
+    speechSynthesis.cancel();
+    setIsSpeaking(false);
+  };
+
   const speakText = (text) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
     speechSynthesis.speak(utterance);
   };
 
@@ -97,6 +105,17 @@ function App() {
                   disabled={isListening}
                 >
                   <i className="bi bi-mic-fill"></i>
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  variant="danger"
+                  className="rounded-circle p-3"
+                  style={{ width: "100px", height: "100px", fontSize: "24px" }}
+                  onClick={stopSpeaking}
+                  disabled={!isSpeaking}
+                >
+                  <i className="bi bi-stop-fill"></i>
                 </Button>
               </Col>
             </Row>
